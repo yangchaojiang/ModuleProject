@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">ZxingModule</string>
+    <string name="zyz_title">扫一扫</string>
+    <!--二维码登录-->
+    <string name="zyz_hint_text">将二维码放入框内，即可自动扫描</string>
+</resources>

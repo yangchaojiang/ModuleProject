@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.moduleproject">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".datepicker.samples.DatePickerSamples"
+            android:label="@string/app_name" />
+
+        <activity android:name=".datepicker.samples.DialogSample" android:theme="@style/SampleTheme.Light" />
+        <activity android:name=".datepicker.samples.LayoutSample"  android:theme="@style/SampleTheme.Light"/>
+        <activity
+            android:name=".numberpicker.samples.SampleActivity"
+            android:label="@string/app_name">
+
+        </activity>
+
+        <activity
+            android:name=".numberpicker.samples.DarkThemeActivity"
+            android:theme="@style/SampleTheme" />
+
+        <activity
+            android:name=".numberpicker.samples.LightThemeActivity"
+            android:theme="@style/SampleTheme.Light" />
+        <activity
+            android:name=".calendarview.samples.CalendarSamples"
+            android:label="@string/app_name" />
+    </application>
+
+</manifest>
