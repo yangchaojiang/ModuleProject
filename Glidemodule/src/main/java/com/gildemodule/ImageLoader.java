@@ -2,15 +2,13 @@ package com.gildemodule;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.gildemodule.utils.MySimpleTarget;
+import com.gildemodule.utils.GlideApp;
+import com.gildemodule.utils.GlideRequest;
 import com.yutils.YUtils;
 
 import java.io.File;
@@ -64,58 +62,36 @@ public class ImageLoader {
     }
 
     public void displayImage(Context context, String path, ImageView imageView) {
-        Glide.with(context).load(path).crossFade().centerCrop().placeholder(defaultError).error(defaultRes).into(imageView);
-    }
-
-    public void displayImage(Context context, String path, ImageView imageView, final MySimpleTarget<Bitmap> simpleTarget) {
-        Glide.with(context).load(path).asBitmap().centerCrop().fitCenter().placeholder(defaultError).error(defaultRes).into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                simpleTarget.onResourceReady(resource);
-            }
-
-            @Override
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                super.onLoadFailed(e, errorDrawable);
-                simpleTarget.onLoadFailed(errorDrawable);
-            }
-
-            @Override
-            public void onLoadStarted(Drawable placeholder) {
-                super.onLoadStarted(placeholder);
-                simpleTarget.onLoadStarted(placeholder);
-            }
-        });
+        GlideApp.with(context).load(path).centerCrop().placeholder(defaultError).fitCenter().error(defaultRes).into(imageView);
     }
 
     public void displayImage(Context context, String path, ImageView imageView, int defaultRes, int width, int height) {
-        Glide.with(context).load(path).crossFade().override(width, height).centerCrop().placeholder(defaultRes).into(imageView);
+        GlideApp.with(context).load(path).override(width, height).centerCrop().placeholder(defaultRes).into(imageView);
     }
 
 
     public void displayImage(Context context, String path, ImageView imageView, int defaultRes, int defaultError, int width, int height) {
-        Glide.with(context).load(path).crossFade().override(width, height).centerCrop().placeholder(defaultRes).error(defaultError).into(imageView);
+        GlideApp.with(context).load(path).override(width, height).centerCrop().placeholder(defaultRes).error(defaultError).into(imageView);
 
     }
 
     public void displayImage(Context context, String path, ImageView imageView, int defaultRes, int defaultError) {
-        Glide.with(context).load(path).crossFade().placeholder(defaultRes).error(defaultError).into(imageView);
+        GlideApp.with(context).load(path).placeholder(defaultRes).error(defaultError).into(imageView);
     }
 
     public void displayImage(Context activity, String path, SimpleTarget<Bitmap> target) {
-        DrawableTypeRequest glide;
+        GlideRequest glide;
         if (YUtils.isHttp(path)) {
-            glide = Glide.with(activity).load(path);
+            glide = GlideApp.with(activity).asBitmap().load(path);
         } else {
-            glide = Glide.with(activity).load(new File(path));
+            glide = GlideApp.with(activity).asBitmap().load(new File(path));
         }
-        glide.crossFade();
-        glide.asBitmap()
-                .placeholder(defaultRes)
+        glide.placeholder(defaultRes)
                 .error(defaultError)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(target);
     }
+
     //清理磁盘缓存 需要在子线程中执行
     public void clearDiskCache(Context context) {
         Glide.get(context).clearDiskCache();
