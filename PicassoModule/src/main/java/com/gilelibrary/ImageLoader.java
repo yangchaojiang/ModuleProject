@@ -22,22 +22,17 @@ import java.util.concurrent.Executors;
  */
 public class ImageLoader {
     public static final String TAG = "ImageLoader";
-    private volatile static ImageLoader instance;
     private int defaultRes;
     private int defaultError;
     private volatile static LruCache cache;
 
-    public static ImageLoader getInstace() {
-        if (instance == null) {
-            synchronized (ImageLoader.class) {
-                if (instance == null) {
-                    instance = new ImageLoader();
-                }
-            }
-        }
-        return instance;
+    public static ImageLoader getInstance() {
+        return Holder.instance;
     }
 
+    private static class Holder {
+        static ImageLoader instance = new ImageLoader();
+    }
     private ImageLoader() {
 
     }

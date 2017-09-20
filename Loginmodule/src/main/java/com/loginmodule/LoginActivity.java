@@ -120,23 +120,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
        // scrollView.setOnTouchListener((v, event) -> true);
-        findViewById(R.id.root).addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
-          /* old是改变前的左上右下坐标点值，没有old的是改变后的左上右下坐标点值
+        findViewById(R.id.root).addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                  /* old是改变前的左上右下坐标点值，没有old的是改变后的左上右下坐标点值
           现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起*/
-            if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
-                Log.e(TAG, "up------>"+(oldBottom - bottom));
-                new Handler().postDelayed(() -> scrollView.smoothScrollTo(0, scrollView.getHeight()), 0);
-                zoomIn(logo, (oldBottom - bottom) - keyHeight);
-            } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
-                Log.e(TAG, "down------>"+(bottom - oldBottom));
-                //键盘收回后，logo恢复原来大小，位置同样回到初始位置
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        scrollView.smoothScrollTo(0, scrollView.getHeight());
-                    }
-                }, 0);
-                zoomOut(logo, (bottom - oldBottom) - keyHeight);
+                if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
+                    Log.e(TAG, "up------>"+(oldBottom - bottom));
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.smoothScrollTo(0, scrollView.getHeight());
+                        }
+                    }, 0);
+                    zoomIn(logo, (oldBottom - bottom) - keyHeight);
+                } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+                    Log.e(TAG, "down------>"+(bottom - oldBottom));
+                    //键盘收回后，logo恢复原来大小，位置同样回到初始位置
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.smoothScrollTo(0, scrollView.getHeight());
+                        }
+                    }, 0);
+                    zoomOut(logo, (bottom - oldBottom) - keyHeight);
+                }
             }
         });
     }
@@ -186,28 +194,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        switch (id) {
-            case R.id.iv_clean_phone:
-                et_mobile.setText("");
-                break;
-            case R.id.clean_password:
-                et_password.setText("");
-                break;
-            case R.id.iv_show_pwd:
-                if (et_password.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
-                    et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    iv_show_pwd.setImageResource(R.drawable.ic_pass_visuable);
-                } else {
-                    et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    iv_show_pwd.setImageResource(R.drawable.ic_pass_gone);
-                }
-                String pwd = et_password.getText().toString();
-                if (!TextUtils.isEmpty(pwd))
-                    et_password.setSelection(pwd.length());
-                break;
-            case R.id.btn_login:
-                verNumber();
-                break;
+        if (id == R.id.iv_clean_phone) {
+            et_mobile.setText("");
+
+        } else if (id == R.id.clean_password) {
+            et_password.setText("");
+
+        } else if (id == R.id.iv_show_pwd) {
+            if (et_password.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                iv_show_pwd.setImageResource(R.drawable.ic_pass_visuable);
+            } else {
+                et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                iv_show_pwd.setImageResource(R.drawable.ic_pass_gone);
+            }
+            String pwd = et_password.getText().toString();
+            if (!TextUtils.isEmpty(pwd))
+                et_password.setSelection(pwd.length());
+
+        } else if (id == R.id.btn_login) {
+            verNumber();
+
         }
     }
 
@@ -225,10 +232,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             YUtils.Toast(R.string.please_input_limit_pwd_length);
         }else {
 
-            YUtils.closeInputMethod(this);///实现登录业务
-        //      getPresenter().login(et_mobile.getText().toString(),et_password.getText().toString());
-
-
+            YUtils.closeInputMethod(et_mobile);///实现登录业务
+        //getPresenter().login(et_mobile.getText().toString(),et_password.getText().toString());
         }
     }
 

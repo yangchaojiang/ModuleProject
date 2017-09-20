@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * E-Mail:yangchaojiang@outlook.com
  * Deprecated: 编辑介绍
  */
-public class RichEditorActivity extends AppCompatActivity implements View.OnClickListener {
+public class RichEditorActivity extends Activity implements View.OnClickListener {
 
     public static final int REQUEST_CODE_PICK_IMAGE = 1023;
     public static final int REQUEST_CODE_CAPTURE_CAMEIA = 1022;
