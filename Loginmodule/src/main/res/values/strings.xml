@@ -1,14 +1,24 @@
 <resources>
     <string name="app_name">LoginModule</string>
-
-    <string name="login_forget_pwd">忘记密码</string>
-    <string name="please_input_limit_pwd">请输入数字或字母</string>
+    <!--公用-->
     <string name="please_input_limit_pwd_length">密码长度六位以上</string>
-    <string name="login">登录</string>
+    <string name="please_input_limit_pwd">请输入数字或字母</string>
     <string name="hint_login_username">请输入手机号码</string>
     <string name="hint_login_password">输入密码</string>
+    <string name="login_hint">登录</string>
+    <string name="login_forget_pwd">忘记密码</string>
     <string name="Registering_new_user">注册新用户</string>
+    <!---->
+    <string name="title_settings_dialog">请求权限</string>
     <string name="title_dialog">友情提示</string>
     <string name="rationale_ask_again">"我们需要的一些权限被您拒绝或者系统发生错误申请失败，请您到设置页面手动授权，否则功能无法正常使用</string>
-    <string name="title_settings_dialog">请求权限</string>
+    <!--tab login-->
+    <string name="verification_code">验证码</string>
+    <string name="hint_get_code">获取验证码</string>
+    <string name="cell_phone_number">手机号</string>
+    <string name="login_password">登录密码</string>
+    <string name="verify_code_to_log_in_quickly">验证码快速登录</string>
+    <string name="mobile_phone_login">手机号登录</string>
+
+
 </resources>

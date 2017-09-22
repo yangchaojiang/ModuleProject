@@ -38,5 +38,5 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.ycjiang:yutils:1.0.2'
+    compile 'com.ycjiang:Yutils:1.1.4'
 }

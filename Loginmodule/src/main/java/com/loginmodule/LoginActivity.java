@@ -20,13 +20,14 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 
 
+import com.yutils.AndroidWorKaroundUtils;
 import com.yutils.YUtils;
 
 /**
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private static  final  String TAG="LoginActivity";
+    private static final String TAG = "LoginActivity";
     private ImageView logo;
     private ScrollView scrollView;
     private EditText et_mobile;
@@ -38,17 +39,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private int keyHeight = 0; //软件盘弹起后所占高度
     private float scale = 0.6f; //logo缩放比例
 
-    public  static  void  startActivity(Activity activity){
-        Intent intent=new Intent(activity,LoginActivity.class);
+    public static void startActivity(Activity activity) {
+        Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置输入法不弹起
         setContentView(R.layout.activity_login);
         YUtils.initialize(getApplication());
-        AndroidBug5497Workaround.assistActivity(this);
+        AndroidWorKaroundUtils.assistActivity(this);
         intiView();
         initListener();
     }
@@ -61,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         iv_clean_phone = (ImageView) findViewById(R.id.iv_clean_phone);
         clean_password = (ImageView) findViewById(R.id.clean_password);
         iv_show_pwd = (ImageView) findViewById(R.id.iv_show_pwd);
-        btn_login= (Button) findViewById(R.id.btn_login);
+        btn_login = (Button) findViewById(R.id.btn_login);
 
         keyHeight = YUtils.getScreenHeight() / 3;//弹起高度为屏幕高度的1/3
     }
@@ -119,14 +121,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-       // scrollView.setOnTouchListener((v, event) -> true);
+        // scrollView.setOnTouchListener((v, event) -> true);
         findViewById(R.id.root).addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                   /* old是改变前的左上右下坐标点值，没有old的是改变后的左上右下坐标点值
           现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起*/
                 if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
-                    Log.e(TAG, "up------>"+(oldBottom - bottom));
+                    Log.e(TAG, "up------>" + (oldBottom - bottom));
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -135,7 +137,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }, 0);
                     zoomIn(logo, (oldBottom - bottom) - keyHeight);
                 } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
-                    Log.e(TAG, "down------>"+(bottom - oldBottom));
+                    Log.e(TAG, "down------>" + (bottom - oldBottom));
                     //键盘收回后，logo恢复原来大小，位置同样回到初始位置
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -151,16 +153,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     /**
      * 缩小
+     *
      * @param view 需要处理view
-     * @param      dist    缩小的
+     * @param dist 缩小的
      */
     public void zoomIn(final View view, float dist) {
         view.setPivotY(view.getHeight());
-        view.setPivotX(view.getWidth() /2);
+        view.setPivotX(view.getWidth() / 2);
         AnimatorSet mAnimatorSet = new AnimatorSet();
         ObjectAnimator mAnimatorScaleX = ObjectAnimator.ofFloat(view, "scaleX", 1.0f, scale);
         ObjectAnimator mAnimatorScaleY = ObjectAnimator.ofFloat(view, "scaleY", 1.0f, scale);
-        ObjectAnimator mAnimatorTranslateY = ObjectAnimator.ofFloat(view, "translationY", 0.0f, -dist+100);
+        ObjectAnimator mAnimatorTranslateY = ObjectAnimator.ofFloat(view, "translationY", 0.0f, -dist + 100);
         mAnimatorSet.play(mAnimatorTranslateY).with(mAnimatorScaleX);
         mAnimatorSet.play(mAnimatorScaleX).with(mAnimatorScaleY);
         mAnimatorSet.setDuration(200);
@@ -169,8 +172,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     /**
      * 放大
+     *
      * @param view 需要处理view
-     * @param      dist    缩小的
+     * @param dist 缩小的
      */
     public void zoomOut(final View view, float dist) {
         view.setPivotY(view.getHeight());
@@ -186,11 +190,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mAnimatorSet.setDuration(200);
         mAnimatorSet.start();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
-        zoomOut(logo,0);
+        zoomOut(logo, 0);
     }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -220,20 +226,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     /***
      * 验证账号
-     * ***/
-    private  void  verNumber(){
-        if (et_mobile.getText().toString().isEmpty()){
+     ***/
+    private void verNumber() {
+        if (et_mobile.getText().toString().isEmpty()) {
             YUtils.Toast(R.string.hint_login_username);
         } else if (et_password.getText().toString().isEmpty()) {
             YUtils.Toast(R.string.hint_login_password);
-        }else   if (!et_mobile.getText().toString().matches("[A-Za-z0-9]+")) {
+        } else if (!et_mobile.getText().toString().matches("[A-Za-z0-9]+")) {
             YUtils.Toast(R.string.please_input_limit_pwd);
-        }else if (et_password.getText().toString().length()<6){
+        } else if (et_password.getText().toString().length() < 6) {
             YUtils.Toast(R.string.please_input_limit_pwd_length);
-        }else {
-
+        } else {
             YUtils.closeInputMethod(et_mobile);///实现登录业务
-        //getPresenter().login(et_mobile.getText().toString(),et_password.getText().toString());
+            //getPresenter().login(et_mobile.getText().toString(),et_password.getText().toString());
         }
     }
 

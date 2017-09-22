@@ -18,25 +18,23 @@
         <activity
             android:name=".datepicker.samples.DatePickerSamples"
             android:label="@string/app_name" />
-
-        <activity android:name=".datepicker.samples.DialogSample" android:theme="@style/SampleTheme.Light" />
-        <activity android:name=".datepicker.samples.LayoutSample"  android:theme="@style/SampleTheme.Light"/>
+        <activity
+            android:name=".datepicker.samples.DialogSample"
+            android:theme="@style/SampleTheme.Light" />
+        <activity
+            android:name=".datepicker.samples.LayoutSample"
+            android:theme="@style/SampleTheme.Light" />
         <activity
             android:name=".numberpicker.samples.SampleActivity"
-            android:label="@string/app_name">
-
-        </activity>
-
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".numberpicker.samples.DarkThemeActivity"
             android:theme="@style/SampleTheme" />
-
         <activity
             android:name=".numberpicker.samples.LightThemeActivity"
             android:theme="@style/SampleTheme.Light" />
-        <activity
-            android:name=".calendarview.samples.CalendarSamples"
-            android:label="@string/app_name" />
+
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.zhihu.matisse.sample.fileprovider"
@@ -44,8 +42,16 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths_public"/>
+                android:resource="@xml/file_paths_public" />
         </provider>
+
+        <activity
+            android:name=".state.StateActivity"
+            />
+        <activity
+            android:name=".toolbar.CenterToolbarActivity"
+            />
+
     </application>
 
 </manifest>
