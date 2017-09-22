@@ -33,7 +33,7 @@
 
 示例：
 
-![标题图片](/test/title.png)
+![标题图片](/CentertoolbarModule/test/title.png)
 
 ``` xml
 <com.center.toolbar.TitleToolbar
@@ -63,7 +63,7 @@
 
 示例:
 
-![副标题](test/subtitle.png)
+![副标题](/CentertoolbarModule/test/subtitle.png)
 
 ``` xml
 <com.center.toolbar.TitleToolbar
@@ -94,7 +94,7 @@
 
 示例:
 
-![返回按钮](test/backable.png)
+![返回按钮](/CentertoolbarModule/test/backable.png)
 
 ``` xml
 <com.center.toolbar.TitleToolbar
@@ -129,7 +129,7 @@
 
 示例:
 
-![返回按钮](test/closeable.png)
+![返回按钮](/CentertoolbarModule/test/closeable.png)
 
 ``` xml
 <me.kareluo.custom.toolbar.TitleToolbar
